@@ -75,7 +75,7 @@ describe('Correção', function () {
   });
 
   describe('wide', function () {
-    it('Wide: 10/06/98', function () {
+    it('Wide: 06/10/98', function () {
         var strDate = "06/10/98";
         assert.deepEqual(index._test.wide(strDate), "06 de outubro de 98");
     });
