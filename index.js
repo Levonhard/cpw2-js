@@ -1,4 +1,8 @@
-const prompt = require('prompt-sync')()
+const tty = require('tty')
+
+if (process.stdout.isTTY == true) {
+    const prompt = require('prompt-sync')()
+}
 
 /**
  * Recebe um array com os nomes de pessoas e retorna um array invertido
@@ -18,13 +22,15 @@ function invert(people){
     return people.reverse()
 }
 
-const nomes = new Array
+if (process.stdout.isTTY == true) {
+    const nomes = new Array
 
-for (let i = 0; i < 3; i++) {
-    nomes.push(prompt(`Informe o ${(i+1)}º nome: `))
+    for (let i = 0; i < 3; i++) {
+        nomes.push(prompt(`Informe o ${(i+1)}º nome: `))
+    }
+
+    console.log (invert(nomes))
 }
-
-console.log (invert(nomes))
 
 /**
  * Essa função recebe um array de notas e retorna uma média
@@ -48,18 +54,18 @@ function mean(grades){
     return media;
 }
 
-let aluno = prompt("Informe o nome do(a) aluno(a): ")
-const notas = new Array
+if (process.stdout.isTTY == true) {
+    let aluno = prompt("Informe o nome do(a) aluno(a): ")
+    const notas = new Array
 
-for (i = 0; i < 3; i++) {
-    notas.push(prompt(`Informe a nota ${(i+1)} do(a) ${aluno}: `))
+    for (i = 0; i < 3; i++) {
+        notas.push(prompt(`Informe a nota ${(i+1)} do(a) ${aluno}: `))
+    }
+
+    const media = mean(notas)
+
+    console.log(`A média de notas do(a) ${aluno} foi ${media}.\nO(A) aluno(a) foi...`)
 }
-
-const media = mean(notas)
-
-console.log(`A média de notas do(a) ${aluno} foi ${media}.\nO(A) aluno(a) foi...`)
-
-
 
 /**
  * Função recebe uma média e informa textualmente se um estudante está aprovado ou não
@@ -145,10 +151,11 @@ function wide(strDate){
     return (`${data_array[0]} de ${mes_str} de ${data_array[(data_array.length-1)]}`)
 }
 
-const data = prompt("Informe uma data no formato (dd/mm/aaaa): ")
+if (process.stdout.isTTY == true) {
+    const data = prompt("Informe uma data no formato (dd/mm/aaaa): ")
 
-console.log(wide(data))
-
+    console.log(wide(data))
+}
 
 // Trecho utilizado pelos testes
 exports._test = {
