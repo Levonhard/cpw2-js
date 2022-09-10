@@ -87,7 +87,9 @@ function isApproved(mean){
     }
 }
 
-console.log(isApproved(media))
+if (process.stdout.isTTY == true) {
+    console.log(isApproved(media))
+}
 
 /**
  * Recebe uma data no formato de string e transforma em um formato textual
