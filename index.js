@@ -1,9 +1,3 @@
-const tty = require('tty')
-
-if (process.stdout.isTTY == true) {
-    const prompt = require('prompt-sync')()
-}
-
 /**
  * Recebe um array com os nomes de pessoas e retorna um array invertido
  *
@@ -20,16 +14,6 @@ function invert(people){
     /* return []; */
 
     return people.reverse()
-}
-
-if (process.stdout.isTTY == true) {
-    const nomes = new Array
-
-    for (let i = 0; i < 3; i++) {
-        nomes.push(prompt(`Informe o ${(i+1)}º nome: `))
-    }
-
-    console.log (invert(nomes))
 }
 
 /**
@@ -54,19 +38,6 @@ function mean(grades){
     return media;
 }
 
-if (process.stdout.isTTY == true) {
-    let aluno = prompt("Informe o nome do(a) aluno(a): ")
-    const notas = new Array
-
-    for (i = 0; i < 3; i++) {
-        notas.push(prompt(`Informe a nota ${(i+1)} do(a) ${aluno}: `))
-    }
-
-    const media = mean(notas)
-
-    console.log(`A média de notas do(a) ${aluno} foi ${media}.\nO(A) aluno(a) foi...`)
-}
-
 /**
  * Função recebe uma média e informa textualmente se um estudante está aprovado ou não
  *
@@ -85,10 +56,6 @@ function isApproved(mean){
     } else {
         return "aprovado"
     }
-}
-
-if (process.stdout.isTTY == true) {
-    console.log(isApproved(media))
 }
 
 /**
@@ -153,16 +120,52 @@ function wide(strDate){
     return (`${data_array[0]} de ${mes_str} de ${data_array[(data_array.length-1)]}`)
 }
 
-if (process.stdout.isTTY == true) {
-    const data = prompt("Informe uma data no formato (dd/mm/aaaa): ")
-
-    console.log(wide(data))
-}
-
 // Trecho utilizado pelos testes
 exports._test = {
     invert: invert,
     mean: mean,
     isApproved: isApproved,
     wide: wide
+}
+
+// CHAMADA DAS FUNÇÕES
+/**
+ * 
+ * Visto que foi utilizado um módulo que utiliza entrada de texto do usuário,
+ * é necessário verificar se, no momento que rodar o programa, este está rodando
+ * em um terminal. Caso contrário o código a seguir é ignorado e dessa forma é possível
+ * realizar os testes necessários pelo github actions por exemplo.
+ * 
+ */
+
+if (process.stdout.isTTY == true) {
+    const prompt = require('prompt-sync')()
+    // ISSUE 1
+    const nomes = new Array
+
+    for (let i = 0; i < 3; i++) {
+        nomes.push(prompt(`Informe o ${(i+1)}º nome: `))
+    }
+
+    console.log (invert(nomes))
+
+    // ISSUE 2
+    let aluno = prompt("Informe o nome do(a) aluno(a): ")
+    const notas = new Array
+
+    for (i = 0; i < 3; i++) {
+        notas.push(prompt(`Informe a nota ${(i+1)} do(a) ${aluno}: `))
+    }
+
+    const media = mean(notas)
+
+    console.log(`A média de notas do(a) ${aluno} foi ${media}.\nO(A) aluno(a) foi...`)
+
+    // ISSUE 3
+    console.log(isApproved(media))
+
+    // ISSUE 4
+    const data = prompt("Informe uma data no formato (dd/mm/aaaa): ")
+
+    console.log(wide(data))
 }
